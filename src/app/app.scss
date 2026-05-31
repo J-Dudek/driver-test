@@ -1,0 +1,104 @@
+/* Styles généraux pour le corps de la page */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+/* Styles pour le conteneur principal du menu */
+.menu-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Styles pour l'icône du burger */
+.burger-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1001;
+  background: transparent; /* Assure la transparence */
+  border: none;
+  cursor: pointer;
+  padding: 0; /* Supprime le padding pour éviter un fond inattendu */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 28px; /* Ajusté la hauteur pour 4 lignes avec un petit espace */
+  transition: opacity 0.3s ease; /* Ajout d'une transition pour la disparition */
+}
+
+/* Masque l'icône du burger quand le menu est ouvert */
+.menu-container.menu-open .burger-icon {
+  opacity: 0;
+  pointer-events: none; /* Empêche les interactions quand masqué */
+}
+
+.burger-icon .line {
+  width: 100%;
+  height: 3px;
+  background-color: #333;
+  transition: all 0.3s ease;
+}
+
+/* Styles pour le menu overlay */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateX(-100%); /* Masqué par défaut */
+  transition: transform 0.3s ease-in-out;
+}
+
+.menu-overlay.open {
+  transform: translateX(0); /* Visible quand ouvert */
+}
+
+.menu-overlay .close-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.menu-overlay ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+.menu-overlay ul li {
+  margin: 20px 0;
+}
+
+.menu-overlay ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5em;
+  padding: 10px 20px;
+  transition: color 0.3s ease;
+}
+
+.menu-overlay ul li a:hover {
+  color: #1976d2; /* Couleur de votre thème */
+}
+
+/* Styles pour le contenu principal de l'application */
+/* Assurez-vous que le contenu de votre application ne soit pas caché par le menu */
+router-outlet + * {
+  padding-top: 60px; /* Pour laisser de l'espace à l'icône du burger si nécessaire */
+}

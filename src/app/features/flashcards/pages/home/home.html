@@ -1,0 +1,65 @@
+<div class="container">
+
+    <div class="header">
+
+        <h1>Quizz Permis</h1>
+
+        <div class="search">
+
+            <input
+                    [(ngModel)]="searchId"
+                    placeholder="Numéro"
+                    type="number"
+            >
+
+            <button (click)="search()">
+                Rechercher
+            </button>
+
+            <button (click)="randomQuestion()">
+                Au hasard
+            </button>
+
+        </div>
+
+    </div>
+
+    @if (displayedGroup) {
+        <div>
+
+            <div class="question-title">
+                Question n° {{ displayedGroup.numero }}
+            </div>
+
+            <div class="cards">
+
+                @for (question of displayedGroup.questions; track question.question) {
+                    <div
+                            (click)="flip(question)"
+                            (keydown)="flip(question)"
+                            (keypress)="flip(question)"
+                            (keyup)="flip(question)"
+                            [class.flipped]="question.flipped"
+                            class="card"
+                    >
+
+                        <div class="card-inner">
+
+                            <div class="card-front">
+                                {{ question.question }}
+                            </div>
+
+                            <div class="card-back">
+                                {{ question.answer }}
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    }
+
+</div>
