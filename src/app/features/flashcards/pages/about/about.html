@@ -1,7 +1,24 @@
-<div class="about-container">
-    <h2>À Propos</h2>
-    <j6n-logo></j6n-logo>
-    <p>Outils de révision pour les questions posées lors du passage du permis de conduire.</p>
-    <p>Pour toute remarque ou suggestion , se rendre sur <a href="https://github.com/J-Dudek/driver-test/issues" rel="noopener noreferrer" target="_blank">cette page et ouvrir une issue</a>.</p>
+<div class="j6n-container about">
+    <div class="j6n-card about__card">
+        <j6n-logo color="var(--j6n-pine)" size="96px"></j6n-logo>
 
+        <p class="j6n-eyebrow">À propos</p>
+        <h1>Un outil de révision, simple et hors ligne</h1>
+        <p class="j6n-muted">
+            Quiz Permis reprend la banque officielle des vérifications de l'examen pratique du permis B :
+            pour chaque fiche, une vérification du véhicule, une question de sécurité routière et une question
+            de premiers secours. L'application s'installe et fonctionne sans connexion.
+        </p>
+
+        <div class="j6n-row about__actions">
+            <a class="j6n-btn" routerLink="/">Commencer à réviser</a>
+            <a class="j6n-btn j6n-btn--secondary" href="https://github.com/J-Dudek/driver-test/issues"
+               rel="noopener noreferrer" target="_blank">Signaler un problème ↗</a>
+        </div>
+    </div>
+
+    <div class="j6n-callout j6n-callout--pine">
+        <p class="j6n-callout__title">Une remarque, une erreur dans une réponse ?</p>
+        <p>Ouvrez une issue sur le dépôt GitHub du projet : toutes les suggestions sont les bienvenues.</p>
+    </div>
 </div>

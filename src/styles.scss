@@ -1,32 +1,23 @@
-:root {
-  --bg: #f4f6fb;
-  --surface: rgba(255, 255, 255, 0.75);
-  --surface-solid: #ffffff;
+/* Le design system (tokens, base, composants) vient de design-j6n — voir angular.json.
+   Ici uniquement la mise en page globale de l'application. */
 
-  --text: #1c1c1e;
-  --muted: #6b7280;
-
-  --primary: #4f46e5;
-  --primary-light: rgba(79, 70, 229, 0.12);
-
-  --radius: 20px;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.06);
+html {
+  scroll-behavior: smooth;
 }
 
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at 20% 20%, #4f46e520, transparent 40%),
-  radial-gradient(circle at 80% 0%, #22c55e20, transparent 35%);
-  z-index: -1;
+.app-main {
+  flex: 1;
+  padding-block: var(--j6n-space-7) var(--j6n-space-8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

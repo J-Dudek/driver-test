@@ -44,7 +44,11 @@
               }
             ],
             "styles": [
+              "node_modules/design-j6n/theme.css",
               "src/styles.scss"
+            ],
+            "scripts": [
+              "node_modules/design-j6n/theme.js"
             ]
           },
           "configurations": {

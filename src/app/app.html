@@ -1,0 +1,37 @@
+<a class="j6n-skiplink" href="#contenu">Aller au contenu</a>
+
+<header class="j6n-header">
+    <a aria-label="Quiz Permis — accueil" class="j6n-brand" routerLink="/">
+        <j6n-logo color="var(--j6n-pine)" size="32px"></j6n-logo>
+        Quiz Permis
+    </a>
+
+    <nav [class.is-open]="menuOpen()" aria-label="Navigation principale" class="j6n-nav" id="nav-principale">
+        <a (click)="closeMenu()" [routerLinkActiveOptions]="{exact: true}" ariaCurrentWhenActive="page"
+           class="j6n-nav__link" routerLink="/" routerLinkActive="is-active">Quiz</a>
+        <a (click)="closeMenu()" ariaCurrentWhenActive="page" class="j6n-nav__link" routerLink="/about"
+           routerLinkActive="is-active">À propos</a>
+        <a (click)="closeMenu()" [href]="pdfUrl" class="j6n-nav__link" rel="noopener noreferrer" target="_blank">
+            Fiches PDF ↗
+        </a>
+    </nav>
+
+    <button (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()"
+            [attr.aria-label]="menuOpen() ? 'Fermer le menu' : 'Ouvrir le menu'"
+            aria-controls="nav-principale" class="j6n-nav__toggle" type="button">
+        {{ menuOpen() ? '✕' : '☰' }}
+    </button>
+</header>
+
+<main class="app-main" id="contenu" tabindex="-1">
+    <router-outlet></router-outlet>
+</main>
+
+<footer class="j6n-footer">
+    <div class="j6n-container">
+        <div class="j6n-footer__bottom">
+            <span>Quiz Permis — vérifications de l'examen pratique</span>
+            <a href="https://github.com/J-Dudek/driver-test" rel="noopener noreferrer" target="_blank">GitHub</a>
+        </div>
+    </div>
+</footer>

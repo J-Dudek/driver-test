@@ -1,9 +1,9 @@
 {
-  "name": "Driver Quizz",
+  "name": "Quiz Permis",
   "short_name": "Quiz",
   "description": "Application de cartes de révision pour le permis de conduire",
-  "theme_color": "#1976d2",
-  "background_color": "#ffffff",
+  "theme_color": "#2c4a3b",
+  "background_color": "#f7faf8",
 
   "display": "standalone",
   "scope": "/",
