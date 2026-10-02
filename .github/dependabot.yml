@@ -1,0 +1,68 @@
+# Dependabot regroupe ses mises à jour au lieu d'ouvrir une PR par paquet.
+# Les paquets Angular doivent toujours monter ensemble : une PR qui bump @angular/common seul
+# casse `npm ci` (conflit de peerDependencies avec @angular/core) — c'est ce qui faisait échouer
+# les déploiements Netlify des anciennes PR.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Paris
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    labels:
+      - dependencies
+    groups:
+      # Tout l'écosystème Angular en une seule PR, versions de sécurité comprises.
+      angular:
+        applies-to: version-updates
+        patterns:
+          - "@angular/*"
+          - "@angular-devkit/*"
+          - "@schematics/angular"
+        update-types:
+          - minor
+          - patch
+      angular-security:
+        applies-to: security-updates
+        patterns:
+          - "@angular/*"
+          - "@angular-devkit/*"
+          - "@schematics/angular"
+      # Le reste : une PR hebdomadaire pour les mineures/correctifs, une PR pour la sécurité.
+      dependencies:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+      security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+    ignore:
+      # Une version majeure d'Angular se migre avec `ng update`, pas avec un bump de lockfile.
+      - dependency-name: "@angular/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@angular-devkit/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(ci)"
+    labels:
+      - dependencies
+    groups:
+      actions:
+        patterns:
+          - "*"
