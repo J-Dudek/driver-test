@@ -1,65 +1,129 @@
-<div class="container">
+<div class="j6n-container j6n-stack page">
 
-    <div class="header">
+    <section class="intro">
+        <p class="j6n-eyebrow">Examen pratique · permis B</p>
+        <h1>Réviser les vérifications</h1>
+        <p class="j6n-muted lead">
+            Les {{ total() || 100 }} fiches de l'épreuve : une vérification du véhicule, une question de sécurité
+            routière et une question de premiers secours. Touchez une carte pour voir la réponse.
+        </p>
 
-        <h1>Quizz Permis</h1>
+        <div class="toolbar">
+            <form (ngSubmit)="search()" class="j6n-search" role="search">
+                <label class="j6n-sr-only" for="numero-fiche">Numéro de fiche</label>
+                <input [(ngModel)]="searchId" [attr.aria-invalid]="notFound() || null"
+                       [attr.max]="total() || null" aria-describedby="numero-aide"
+                       class="j6n-input j6n-search__input" id="numero-fiche" inputmode="numeric" min="1"
+                       name="numero" placeholder="N° de fiche" type="number">
+                <button class="j6n-btn j6n-btn--pine j6n-search__btn" type="submit">Afficher</button>
+            </form>
 
-        <div class="search">
-
-            <input
-                    [(ngModel)]="searchId"
-                    placeholder="Numéro"
-                    type="number"
-            >
-
-            <button (click)="search()">
-                Rechercher
+            <button (click)="randomQuestion()" [disabled]="!total()" class="j6n-btn" type="button">
+                Fiche au hasard
             </button>
 
-            <button (click)="randomQuestion()">
-                Au hasard
-            </button>
-
+            @if (canInstall()) {
+                <button (click)="installApp()" class="j6n-btn j6n-btn--ghost" type="button">
+                    Installer l'application
+                </button>
+            }
         </div>
 
-    </div>
+        <p [class.j6n-hint--danger]="notFound()" aria-live="polite" class="j6n-hint" id="numero-aide">
+            @if (notFound()) {
+                Aucune fiche avec ce numéro — choisissez entre 1 et {{ total() }}.
+            } @else {
+                Astuce : les flèches ← → du clavier passent d'une fiche à l'autre.
+            }
+        </p>
+    </section>
 
-    @if (displayedGroup) {
-        <div>
-
-            <div class="question-title">
-                Question n° {{ displayedGroup.numero }}
+    @if (loadError()) {
+        <div class="j6n-alert j6n-alert--danger" role="alert">
+            <div>
+                <p class="j6n-alert__title">Impossible de charger les fiches</p>
+                <p class="j6n-alert__body">Vérifiez votre connexion puis rechargez la page.</p>
             </div>
-
-            <div class="cards">
-
-                @for (question of displayedGroup.questions; track question.question) {
-                    <div
-                            (click)="flip(question)"
-                            (keydown)="flip(question)"
-                            (keypress)="flip(question)"
-                            (keyup)="flip(question)"
-                            [class.flipped]="question.flipped"
-                            class="card"
-                    >
-
-                        <div class="card-inner">
-
-                            <div class="card-front">
-                                {{ question.question }}
-                            </div>
-
-                            <div class="card-back">
-                                {{ question.answer }}
-                            </div>
-
-                        </div>
-
-                    </div>
-                }
-            </div>
-
         </div>
     }
 
+    @if (displayedGroup(); as group) {
+        <section aria-labelledby="titre-fiche" class="fiche">
+            <div class="fiche__head">
+                <h2 class="fiche__title" id="titre-fiche">
+                    Fiche <span class="j6n-mono">{{ group.numero }}</span>
+                    <span class="j6n-muted fiche__total">/ {{ total() }}</span>
+                </h2>
+
+                <div class="j6n-row fiche__actions">
+                    <button (click)="toggleAll()" class="j6n-btn j6n-btn--ghost j6n-btn--sm" type="button">
+                        {{ allRevealed() ? 'Tout masquer' : 'Tout révéler' }}
+                    </button>
+                    <button (click)="previous()" [disabled]="group.numero <= 1"
+                            aria-label="Fiche précédente" class="j6n-btn j6n-btn--secondary j6n-btn--sm" type="button">
+                        ← Préc.
+                    </button>
+                    <button (click)="next()" [disabled]="group.numero >= total()"
+                            aria-label="Fiche suivante" class="j6n-btn j6n-btn--secondary j6n-btn--sm" type="button">
+                        Suiv. →
+                    </button>
+                </div>
+            </div>
+
+            <ol class="cards">
+                @for (question of group.questions; track $index) {
+                    <li>
+                        <button (click)="flip($index)" [attr.aria-pressed]="revealed().has($index)"
+                                [class.is-flipped]="revealed().has($index)" class="flashcard" type="button">
+                            <span [attr.aria-hidden]="revealed().has($index)" class="flashcard__face flashcard__front">
+                                <span class="flashcard__kind">{{ $index + 1 }} · {{ kinds[$index] }}</span>
+                                <span class="flashcard__text">{{ question.question }}</span>
+                                <span class="flashcard__cue">Voir la réponse</span>
+                            </span>
+                            <span [attr.aria-hidden]="!revealed().has($index)" class="flashcard__face flashcard__back">
+                                <span class="flashcard__kind">Réponse</span>
+                                <span class="flashcard__text">{{ question.answer }}</span>
+                                <span class="flashcard__cue">Revoir la question</span>
+                            </span>
+                        </button>
+                    </li>
+                }
+            </ol>
+        </section>
+    } @else if (total()) {
+        <div class="j6n-callout j6n-callout--pine">
+            <p class="j6n-callout__title">Par où commencer ?</p>
+            <p>Tirez une fiche au hasard — les fiches pas encore vues passent en priorité — ou choisissez-en une
+                ci-dessous.</p>
+        </div>
+    }
+
+    @if (total()) {
+        <section aria-labelledby="titre-toutes" class="all">
+            <div class="all__head">
+                <h2 class="all__title" id="titre-toutes">Toutes les fiches</h2>
+                <span class="j6n-badge j6n-badge--pine">{{ seen().size }} / {{ total() }} vues</span>
+                @if (seen().size) {
+                    <button (click)="resetProgress()" class="j6n-btn j6n-btn--ghost j6n-btn--sm" type="button">
+                        Remettre à zéro
+                    </button>
+                }
+            </div>
+            <div class="progress" aria-hidden="true">
+                <span [style.width.%]="seen().size / total() * 100" class="progress__bar"></span>
+            </div>
+            <ul class="numbers">
+                @for (g of groups(); track g.numero) {
+                    <li>
+                        <button (click)="goTo(g.numero)" [attr.aria-current]="g.numero === current() ? 'true' : null"
+                                [attr.aria-label]="'Fiche ' + g.numero + (seen().has(g.numero) ? ', déjà vue' : '')"
+                                [class.is-current]="g.numero === current()" [class.is-seen]="seen().has(g.numero)"
+                                class="number" type="button">
+                            {{ g.numero }}
+                        </button>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
 </div>

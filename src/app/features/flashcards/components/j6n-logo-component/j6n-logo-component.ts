@@ -7,6 +7,6 @@ import {Component, Input} from '@angular/core';
   styleUrl: './j6n-logo-component.scss',
 })
 export class J6nLogoComponent {
-  @Input() color: string = '#4f46e5';
+  @Input() color: string = 'currentColor';
   @Input() size: string = '80px';
 }

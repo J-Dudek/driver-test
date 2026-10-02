@@ -1,14 +1,19 @@
-.about-container {
-  padding: 20px;
-  text-align: center;
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: var(--j6n-space-5);
+  max-width: 760px;
 }
 
-h2 {
-  color: #333;
-  margin-bottom: 15px;
+.about__card {
+  padding: var(--j6n-space-7) var(--j6n-space-6);
 }
 
-p {
-  color: #666;
-  line-height: 1.6;
+.about__card j6n-logo {
+  display: block;
+  margin-bottom: var(--j6n-space-4);
+}
+
+.about__actions {
+  margin-top: var(--j6n-space-5);
 }
