@@ -1,0 +1,14 @@
+# Fichiers qui décident de la version de la PWA : jamais mis en cache HTTP, sinon le
+# service worker peut ne pas voir qu'une nouvelle version a été déployée.
+/ngsw-worker.js
+  Cache-Control: no-cache, no-store, must-revalidate
+/ngsw.json
+  Cache-Control: no-cache, no-store, must-revalidate
+/safety-worker.js
+  Cache-Control: no-cache, no-store, must-revalidate
+/worker-basic.min.js
+  Cache-Control: no-cache, no-store, must-revalidate
+/index.html
+  Cache-Control: no-cache
+/manifest.webmanifest
+  Cache-Control: no-cache
