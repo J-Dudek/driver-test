@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://quizzpermis.byj6n.fr/sitemap.xml

@@ -17,3 +17,11 @@
 .about__actions {
   margin-top: var(--j6n-space-5);
 }
+
+.about__author {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--j6n-space-3);
+  padding: var(--j6n-space-6);
+}

@@ -1,4 +1,5 @@
-import {Component, computed, DestroyRef, HostListener, inject, OnInit, signal} from '@angular/core';
+import {Component, computed, DestroyRef, HostListener, inject, OnInit, PLATFORM_ID, signal} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {QuestionService} from '../../../../core/services/question.service';
@@ -23,7 +24,7 @@ export class Home implements OnInit {
     readonly current = signal<number | undefined>(undefined);
     /** Index des cartes retournées sur la fiche courante. */
     readonly revealed = signal<ReadonlySet<number>>(new Set());
-    readonly seen = signal<ReadonlySet<number>>(loadSeen());
+    readonly seen = signal<ReadonlySet<number>>(new Set());
     readonly notFound = signal(false);
     readonly loadError = signal(false);
     readonly canInstall = signal(false);
@@ -40,9 +41,13 @@ export class Home implements OnInit {
     private readonly service = inject(QuestionService);
     private readonly route = inject(ActivatedRoute);
     private readonly router = inject(Router);
+    /** Faux au pré-rendu : la page servie ne contient que l'introduction, les fiches arrivent ensuite. */
+    private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
     private deferredPrompt: any = null;
 
     constructor() {
+        if (!this.isBrowser) return;
+        this.seen.set(loadSeen());
         const onPrompt = (event: Event) => {
             event.preventDefault();
             this.deferredPrompt = event;
@@ -53,6 +58,7 @@ export class Home implements OnInit {
     }
 
     ngOnInit(): void {
+        if (!this.isBrowser) return;
         this.service.loadQuestions().subscribe({
             next: data => {
                 this.groups.set(data);

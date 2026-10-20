@@ -1,4 +1,5 @@
-import {ApplicationRef, DestroyRef, inject, Injectable} from '@angular/core';
+import {ApplicationRef, DestroyRef, inject, Injectable, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
 import {SwUpdate} from '@angular/service-worker';
 import {filter, first} from 'rxjs';
 
@@ -28,8 +29,10 @@ export class AppUpdateService {
     private readonly swUpdate = inject(SwUpdate);
     private readonly appRef = inject(ApplicationRef);
     private readonly destroyRef = inject(DestroyRef);
+    private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
     start(): void {
+        if (!this.isBrowser) return;
         this.announceIfJustUpdated();
 
         if (!this.swUpdate.isEnabled) return;
