@@ -1,9 +1,10 @@
-import {Component, HostListener, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostListener, signal} from '@angular/core';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {J6nLogoComponent} from './features/flashcards/components/j6n-logo-component/j6n-logo-component';
 
 @Component({
     selector: 'app-root',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
     templateUrl: './app.html',
     styleUrl: './app.scss',

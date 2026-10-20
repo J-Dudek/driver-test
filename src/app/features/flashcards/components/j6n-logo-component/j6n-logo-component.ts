@@ -1,7 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
 @Component({
   selector: 'j6n-logo',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [],
   templateUrl: './j6n-logo-component.html',
   styleUrl: './j6n-logo-component.scss',

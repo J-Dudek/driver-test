@@ -1,4 +1,4 @@
-import {Component, computed, DestroyRef, HostListener, inject, OnInit, PLATFORM_ID, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, DestroyRef, HostListener, inject, OnInit, PLATFORM_ID, signal} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -12,6 +12,7 @@ const QUESTION_KINDS = ['Vérification', 'Sécurité routière', 'Premiers secou
 
 @Component({
     selector: 'app-home',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
     imports: [FormsModule],
     templateUrl: './home.html',

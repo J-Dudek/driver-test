@@ -2,7 +2,7 @@
 
 Cette application est une Progressive Web App (PWA) conçue pour aider à la révision du permis de conduire sous forme de flashcards interactives. Elle permet aux utilisateurs de parcourir des questions/réponses, de les retourner pour révéler la solution, et de s'entraîner de manière efficace. Grâce à sa nature de PWA, elle peut être installée sur votre appareil pour une utilisation hors ligne et une expérience utilisateur améliorée.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.4.
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.3.
 
 ## Development server
 
